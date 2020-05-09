@@ -2,11 +2,11 @@ const express = require('express');
 const router = new express.Router();
 const Location = require('../models/location');
 
-router.get('/locations/:id', async (req, res) => {
-  const _id = req.params.id;
+router.get('/locations/:name', async (req, res) => {
+  const name = req.params.name;
 
   try {
-    const location = await Location.findOne({ _id });
+    const location = await Location.findOne({ name });
 
     if (!location) {
       return res.send(404).send();
