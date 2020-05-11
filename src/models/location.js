@@ -39,6 +39,10 @@ const locationSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    dateUpdated: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
