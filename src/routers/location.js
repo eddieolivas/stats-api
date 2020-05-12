@@ -3,11 +3,11 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 const Location = require('../models/location');
 
-router.get('/locations/:name', async (req, res) => {
-  const name = req.params.name;
+router.get('/locations/:locationId', async (req, res) => {
+  const name = req.params.locationId;
 
   try {
-    const location = await Location.findOne({ name });
+    const location = await Location.findOne({ locationId });
 
     if (!location) {
       return res.send(404).send();
