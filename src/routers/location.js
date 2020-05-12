@@ -3,7 +3,7 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 const Location = require('../models/location');
 
-router.get('/locations/:locationId', async (req, res) => {
+router.get('/locations/:locationId', auth, async (req, res) => {
   const locationId = req.params.locationId;
 
   try {
