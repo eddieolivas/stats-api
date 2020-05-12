@@ -43,6 +43,10 @@ const locationSchema = new mongoose.Schema({
     dateUpdated: {
         type: String,
         required: true
+    },
+    locationId: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
