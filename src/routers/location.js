@@ -4,7 +4,7 @@ const router = new express.Router();
 const Location = require('../models/location');
 
 router.get('/locations/:locationId', async (req, res) => {
-  const name = req.params.locationId;
+  const locationId = req.params.locationId;
 
   try {
     const location = await Location.findOne({ locationId });
