@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 
-mongoose.connect('mongodb+srv://dbUser:HaeQHxqPhSfJZqQi@stats-api-6abbd.mongodb.net/stats-api?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
