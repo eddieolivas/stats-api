@@ -3,6 +3,7 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 const Location = require('../models/location');
 
+// Set up the /locations route. This is the main endpoint that sends the HTML to be displayed on the front end.
 router.get('/locations/:locationId', auth, async (req, res) => {
   const locationId = req.params.locationId;
 
@@ -13,6 +14,7 @@ router.get('/locations/:locationId', auth, async (req, res) => {
       return res.send(404).send();
     }
 
+    // Set up the location variables pulled from the response.
     $name = location.name;
     $dateUpdated = location.dateUpdated;
     $state = location.state;
@@ -25,7 +27,56 @@ router.get('/locations/:locationId', auth, async (req, res) => {
     $symptomsin72hours = location.symptomsin72hours;
     $open = location.open;
 
-    const response = '<div style="display: none;"><aside id="covid-stats"><h3><strong>Current COVID-19 Testing Information for ' + $name + '</strong></h3><p>Data reflects current information as of ' + $dateUpdated + '.</p><ul><li>A positive test confirms evidence of the virus, but does not confirm the patient is experiencing symptoms.</li><li>Open visitation is subject to change based on today\'s testing.</li></ul><p><strong>Mitigating Factors</strong></p><ul><li>Enhanced infection control precautions to include isolation units for COVID-19 positive residents</li><li>Screening residents, staff, and essential visitors</li><li>Restricting visitation</li><li>Testing staff and residents for COVID-19 based on current protocols and availability of tests</li><li>Postponing communal activities</li><li>Universal masking for all staff</li><li>Monitoring of residents every shift for signs and symptoms</li><li>Temperature checks daily</li><li>Increased monitoring of vitals</li><li>Increased disinfecting efforts</li></ul></p><table><thead> <tr><th>Operational Beds</th><th>New Positive Covid Resident Cases Since Prior Day</th><th>Cumulative Total of Residents Admitted w/Covid</th><th>Cumulative Total of Covid Positive Residents</th><th>New Positive Covid Staff Cases Since Prior Day</th><th>Cumulative Total Number of Covid Positive Staff</th><th>Incidents of 3 or More Residents/Staff with New Respiratory Symptoms Within 72 Hours</th><th>Open for Visitation</th></tr></thead><tbody><tr><td>' + $beds + '</td><td>' + $positiveresidents + '</td><td>' + $admittedcovid + '</td><td>' + $totalpositiveresidents + '</td><td>' + $positivestaff + '</td><td>' + $totalpositivestaff + '</td><td>' + $symptomsin72hours + '</td><td>' + $open + '</td></tr></tbody></table></aside></div>';
+    const response = '<div style="display: none;">' +
+                        '<aside id="covid-stats">' +
+                          '<h3><strong>Current COVID-19 Testing Information for ' + $name + '</strong></h3>' +
+                          '<p>Data reflects current information as of ' + $dateUpdated + '.</p>' +
+                          '<ul>' +
+                            '<li>A positive test confirms evidence of the virus, but does not confirm the patient is experiencing symptoms.</li>' +
+                            '<li>Open visitation is subject to change based on today\'s testing.</li>' +
+                            '<li>All centers are open for outdoor visitation.</li>' +
+                          '</ul>' +
+                          '<p><strong>Mitigating Factors</strong></p>' +
+                          '<ul>' +
+                            '<li>Enhanced infection control precautions to include isolation units for COVID-19 positive residents</li>' +
+                            '<li>Screening residents, staff, and essential visitors</li>' +
+                            '<li>Restricting visitation</li>' +
+                            '<li>Testing staff and residents for COVID-19 based on current protocols and availability of tests</li>' +
+                            '<li>Postponing communal activities</li>' +
+                            '<li>Universal masking for all staff</li>' +
+                            '<li>Monitoring of residents every shift for signs and symptoms</li>' +
+                            '<li>Temperature checks daily</li>' +
+                            '<li>Increased monitoring of vitals</li>' +
+                            '<li>Increased disinfecting efforts</li>' +
+                          '</ul>' + 
+                          '<table>' +
+                            '<thead>' +
+                              '<tr>' +
+                                '<th>Operational Beds</th>' +
+                                '<th>New Positive Covid Resident Cases Since Prior Day</th>' +
+                                '<th>Cumulative Total of Residents Admitted w/Covid</th>' +
+                                '<th>Cumulative Total of Covid Positive Residents</th>' +
+                                '<th>New Positive Covid Staff Cases Since Prior Day</th>' +
+                                '<th>Cumulative Total Number of Covid Positive Staff</th>' +
+                                '<th>Incidents of 3 or More Residents/Staff with New Respiratory Symptoms Within 72 Hours</th>' +
+                                '<th>Open for Indoor Visitation</th>' +
+                              '</tr>' +
+                            '</thead>' +
+                            '<tbody>' +
+                              '<tr>' +
+                                '<td>' + $beds + '</td>' +
+                                '<td>' + $positiveresidents + '</td>' +
+                                '<td>' + $admittedcovid + '</td>' +
+                                '<td>' + $totalpositiveresidents + '</td>' +
+                                '<td>' + $positivestaff + '</td>' +
+                                '<td>' + $totalpositivestaff + '</td>' +
+                                '<td>' + $symptomsin72hours + '</td>' +
+                                '<td>' + $open + '</td>' +
+                              '</tr>' +
+                            '</tbody>' +
+                          '</table>' +
+                        '</aside>' +
+                      '</div>';
 
     res.status(201).send(response);
   } catch (e) {
