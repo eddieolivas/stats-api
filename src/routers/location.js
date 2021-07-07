@@ -16,7 +16,6 @@ router.get('/locations/:locationId', auth, async (req, res) => {
 
     // Set up the location variables pulled from the response.
     $name = location.name;
-    $dateUpdated = location.dateUpdated;
     $state = location.state;
     $beds = location.beds;
     $positiveresidents = location.positiveresidents;
@@ -30,7 +29,7 @@ router.get('/locations/:locationId', auth, async (req, res) => {
     const response = '<div style="display: none;">' +
                         '<aside id="covid-stats">' +
                           '<h3><strong>Current COVID-19 Testing Information for ' + $name + '</strong></h3>' +
-                          '<p>Data reflects current information as of ' + $dateUpdated + '.</p>' +
+                          '<p>Data reflects current information.</p>' +
                           '<ul>' +
                             '<li>A positive test confirms evidence of the virus, but does not confirm the patient is experiencing symptoms.</li>' +
                             '<li>Open visitation is subject to change based on today\'s testing.</li>' +
